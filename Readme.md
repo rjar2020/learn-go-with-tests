@@ -11,4 +11,4 @@ From your CI or the terminal for executing the developer tests in a particular p
 go test github.com/rjar2020/learn-go-with-tests/ints
 ```
 
-[Learn Go with Tests by Chris James] : https://quii.gitbook.io/learn-go-with-tests/
+[Learn Go with Tests by Chris James]: https://quii.gitbook.io/learn-go-with-tests/
