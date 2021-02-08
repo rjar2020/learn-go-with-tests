@@ -5,7 +5,7 @@ Forked from [Learn Go with Tests by Chris James]
 - Go Tools
 
 ## Testing
-From your CI or the terminal for executing the developer tests in a particular package execute the following:
+From your CI or the terminal for executing benchmarks in a particular package execute the following:
 
 ```bash
 go test github.com/rjar2020/learn-go-with-tests/ints
