@@ -25,7 +25,7 @@ From your terminal, to see the documentation execute the following steps from th
 
 ```bash
 godoc -http=:6060
-#You shoudl se the followin 
+#You should see the followin message
 # using module mode; GOMOD=/Users/<your-user>/repo/go/src/github.com/rjar2020/learn-go-with-tests/go.mod
 ```
 Then go to http://localhost:6060/pkg/ and search for Third Party section, your packages should be there.
