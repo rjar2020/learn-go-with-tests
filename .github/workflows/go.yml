@@ -22,10 +22,13 @@ jobs:
       #run: go build -v ./...
 
     - name: Test hello pkg
-      run: go test -v github.com/rjar2020/learn-go-with-tests/hello
+      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/hello
 
     - name: Test ints pkg
-      run: go test -v github.com/rjar2020/learn-go-with-tests/ints
+      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/ints
       
     - name: Test iteration pkg
-      run: go test -v github.com/rjar2020/learn-go-with-tests/iteration
+      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/iteration
+    
+    - name: Test collections pkg
+      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/collections
