@@ -10,7 +10,7 @@ From your CI or the terminal, for running the developer tests in a particular pa
 ```bash
 go test github.com/rjar2020/learn-go-with-tests/ints
 ```
-If you want to have a more verbose output, including coverage, test and examples information, execute the following
+If you want to have a more verbose output, including coverage, test and examples information, execute the following:
 
 ```bash
 go test -v -cover github.com/rjar2020/learn-go-with-tests/iteration
