@@ -1,4 +1,4 @@
-package collections
+package slices
 
 //Sum sums up all the numbers in the input slice
 func Sum(numbers []int) int {
