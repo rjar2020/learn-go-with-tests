@@ -31,4 +31,4 @@ jobs:
       run: go test -v -cover github.com/rjar2020/learn-go-with-tests/iteration
     
     - name: Test collections pkg
-      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/collections
+      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/slices
