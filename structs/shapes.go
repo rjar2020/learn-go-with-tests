@@ -2,6 +2,7 @@ package structs
 
 import "math"
 
+//Shape assit in decoupling Area() calculation from concrete shapes
 type Shape interface {
 	Area() float64
 }
@@ -12,11 +13,12 @@ type Rectangle struct {
 	Height float64
 }
 
+//Area calculates a rectangle' area
 func (r Rectangle) Area() float64 {
 	return r.Width * r.Height
 }
 
-//Perimeter calculates a rectangles' perimeter
+//Perimeter calculates a rectangle' perimeter
 func (r Rectangle) Perimeter() float64 {
 	return 2 * (r.Width + r.Height)
 }
@@ -26,6 +28,7 @@ type Circle struct {
 	Radius float64
 }
 
+//Area calculates a circle' area
 func (c Circle) Area() float64 {
 	return math.Pi * c.Radius * c.Radius
 }
