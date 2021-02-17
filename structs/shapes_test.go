@@ -8,7 +8,7 @@ import (
 
 func TestPerimeter(t *testing.T) {
 	rectangle := Rectangle{10.0, 10.0}
-	got := Perimeter(rectangle)
+	got := rectangle.Perimeter()
 	want := 40.0
 	assert.Equal(t, want, got, "The rectangle doesn't have the expected perimeter")
 }
