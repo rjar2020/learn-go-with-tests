@@ -26,18 +26,3 @@ jobs:
 
     - name: Test with gorc
       run: gorc test -v -cover
-
-    - name: Test hello pkg
-      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/hello
-
-    - name: Test ints pkg
-      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/ints
-      
-    - name: Test iteration pkg
-      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/iteration
-    
-    - name: Test collections pkg
-      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/slices
-    
-    - name: Test collections pkg
-      run: go test -v -cover github.com/rjar2020/learn-go-with-tests/structs
