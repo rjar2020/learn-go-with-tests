@@ -25,4 +25,4 @@ jobs:
       #run: go build -v ./...
 
     - name: Test with gorc
-      run: gorc test -v -cover
+      run: gorc test
