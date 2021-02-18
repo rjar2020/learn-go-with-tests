@@ -20,11 +20,10 @@ jobs:
     
     - name: Setup gorc
       run: go get github.com/stretchr/gorc
-      run: go install
 
     - name: Refresh go installation
       run: go install
-      
+
     #- name: Build
       #run: go build -v ./...
 
