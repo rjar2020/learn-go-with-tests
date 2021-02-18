@@ -21,6 +21,9 @@ jobs:
     #- name: Build
       #run: go build -v ./...
 
+    - name: Test with gorc
+      run: gorc test -v -cover
+
     - name: Test hello pkg
       run: go test -v -cover github.com/rjar2020/learn-go-with-tests/hello
 
