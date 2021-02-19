@@ -29,7 +29,7 @@ func TestRepeat(t *testing.T) {
 		assert.Equal(want, got)
 	})
 
-	t.Run("EnhancedRepeat doesn't repeat a character when pasing neutral (1) multiplier", func(t *testing.T) {
+	t.Run("Repeat doesn't repeat a character when pasing neutral (1) multiplier", func(t *testing.T) {
 		got := Repeat("W", 1)
 		want := "W"
 		assert.Equal(want, got)
