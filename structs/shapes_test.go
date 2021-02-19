@@ -14,20 +14,17 @@ func TestPerimeter(t *testing.T) {
 }
 
 func TestArea(t *testing.T) {
-	checkArea := func(t testing.TB, shape Shape, want float64) {
-		t.Helper()
-		got := shape.Area()
-		assert.Equal(t, want, got, "The shape doesn't have the expected area")
-	}
 
 	t.Run("rectangles", func(t *testing.T) {
-		rectangle := Rectangle{12, 6}
-		checkArea(t, rectangle, 72.0)
+		got := Rectangle{12, 6}.Area()
+		want := 72.0
+		assert.Equal(t, want, got, "The shape doesn't have the expected area")
 	})
 
 	t.Run("circles", func(t *testing.T) {
-		circle := Circle{10}
-		checkArea(t, circle, 314.1592653589793)
+		got := Circle{10}.Area()
+		want := 314.1592653589793
+		assert.Equal(t, want, got, "The shape doesn't have the expected area")
 	})
 
 }

@@ -2,63 +2,47 @@ package slices
 
 import (
 	"fmt"
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestFindFirstConsecutiveDigits(t *testing.T) {
 
-	matchDigits := func(t testing.TB, got, want []int) {
-		t.Helper()
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("got %v want %v", got, want)
-		}
-	}
-
 	t.Run("find the digits when in one position of input string slice", func(t *testing.T) {
-		target := []string{"hola", "235ty", "rty"}
-
-		got := FindFirstConsecutiveDigits(target)
+		got := FindFirstConsecutiveDigits([]string{"hola", "235ty", "rty"})
 		want := []int{2, 3, 5}
-		matchDigits(t, got, want)
+		assert.Equal(t, want, got)
 	})
 
 	t.Run("find the digits when in 2 positions of input string slice", func(t *testing.T) {
-		target := []string{"hola", "ty235", "78r", "4567388"}
-
-		got := FindFirstConsecutiveDigits(target)
+		got := FindFirstConsecutiveDigits([]string{"hola", "ty235", "78r", "4567388"})
 		want := []int{2, 3, 5, 7, 8}
-		matchDigits(t, got, want)
+		assert.Equal(t, want, got)
 	})
 
 	t.Run("find the digits when in several positions of input string slice", func(t *testing.T) {
-		target := []string{"hola", "3", "5", "456", "89", "1atgsg3552", "67152"}
-
-		got := FindFirstConsecutiveDigits(target)
+		got := FindFirstConsecutiveDigits([]string{"hola", "3", "5", "456", "89", "1atgsg3552", "67152"})
 		want := []int{3, 5, 4, 5, 6, 8, 9, 1}
-		matchDigits(t, got, want)
+		assert.Equal(t, want, got)
 	})
 
 	t.Run("return an empty slice when input string slice is empty", func(t *testing.T) {
-		target := []string{}
-
-		got := FindFirstConsecutiveDigits(target)
+		got := FindFirstConsecutiveDigits([]string{})
 		want := []int{}
-		matchDigits(t, got, want)
+		assert.Equal(t, want, got)
 	})
 
 	t.Run("return an empty slice when input string slice doesn't have numbers/digits", func(t *testing.T) {
-		target := []string{"hola", "wdfty", "rty"}
-
-		got := FindFirstConsecutiveDigits(target)
+		got := FindFirstConsecutiveDigits([]string{"hola", "wdfty", "rty"})
 		want := []int{}
-		matchDigits(t, got, want)
+		assert.Equal(t, want, got)
 	})
 
 	t.Run("return an empty slice when input string slice is nil", func(t *testing.T) {
 		got := FindFirstConsecutiveDigits(nil)
 		want := []int{}
-		matchDigits(t, got, want)
+		assert.Equal(t, want, got)
 	})
 }
 

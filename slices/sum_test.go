@@ -4,19 +4,14 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSum(t *testing.T) {
-
-	numbers := []int{1, 2, 3}
-
-	got := Sum(numbers)
+	got := Sum([]int{1, 2, 3})
 	want := 6
-
-	if got != want {
-		t.Errorf("got %d want %d given, %v", got, want, numbers)
-	}
-
+	assert.Equal(t, want, got, "The result doesn't match the sum of all elements in the input slice")
 }
 
 func BenchmarkSum(b *testing.B) {
@@ -33,6 +28,7 @@ func ExampleSum() {
 
 func TestSumAllTails(t *testing.T) {
 
+	//Won't replace it with testify to let reflect.DeepEqual usage example
 	checksum := func(t testing.TB, got, want []int) {
 		t.Helper()
 		if !reflect.DeepEqual(got, want) {
@@ -51,7 +47,6 @@ func TestSumAllTails(t *testing.T) {
 		want := []int{0, 9}
 		checksum(t, got, want)
 	})
-
 }
 
 func BenchmarkSumAllTails(b *testing.B) {
