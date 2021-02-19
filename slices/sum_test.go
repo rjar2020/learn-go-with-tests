@@ -5,13 +5,13 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSum(t *testing.T) {
 	got := Sum([]int{1, 2, 3})
 	want := 6
-	assert.Equal(t, want, got, "The result doesn't match the sum of all elements in the input slice")
+	require.Equal(t, want, got, "The result doesn't match the sum of all elements in the input slice")
 }
 
 func BenchmarkSum(b *testing.B) {
