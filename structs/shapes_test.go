@@ -18,16 +18,16 @@ func TestArea(t *testing.T) {
 
 	assert := require.New(t)
 
-	t.Run("rectangles", func(t *testing.T) {
+	t.Run("calculates a Rectangle's area", func(t *testing.T) {
 		got := Rectangle{12, 6}.Area()
 		want := 72.0
-		assert.Equal(want, got, "The shape doesn't have the expected area")
+		assert.Equal(want, got)
 	})
 
-	t.Run("circles", func(t *testing.T) {
+	t.Run("calculates a Circles's area", func(t *testing.T) {
 		got := Circle{10}.Area()
 		want := 314.1592653589793
-		assert.Equal(want, got, "The shape doesn't have the expected area")
+		assert.Equal(want, got)
 	})
 
 }
