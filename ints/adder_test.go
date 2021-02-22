@@ -3,15 +3,14 @@ package ints
 import (
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAdder(t *testing.T) {
-	sum := Add(2, 2)
-	expected := 4
-
-	if sum != expected {
-		t.Errorf("expected '%d' but got '%d'", expected, sum)
-	}
+	got := Add(2, 2)
+	want := 4
+	assert.Equal(t, want, got, "The result of the sum operation is incorrect")
 }
 
 func ExampleAdd() {

@@ -3,39 +3,36 @@ package iteration
 import (
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestRepeat(t *testing.T) {
 
-	assertCorrectMessage := func(t testing.TB, repeated, expected string) {
-		t.Helper()
-		if repeated != expected {
-			t.Errorf("expected %q but got %q", expected, repeated)
-		}
-	}
+	assert := require.New(t)
 
-	t.Run("Repeat a character, 10 times", func(t *testing.T) {
-		repeated := Repeat("a", 10)
-		expected := "aaaaaaaaaa"
-		assertCorrectMessage(t, repeated, expected)
+	t.Run("Repeat repeats a character, 10 times", func(t *testing.T) {
+		want := Repeat("a", 10)
+		got := "aaaaaaaaaa"
+		assert.Equal(want, got)
 	})
 
-	t.Run("Repeat a character, pasing a negative multiplier", func(t *testing.T) {
-		repeated := Repeat("z", -1)
-		expected := "z"
-		assertCorrectMessage(t, repeated, expected)
+	t.Run("Repeat doesn't repeat a character when pasing a negative multiplier", func(t *testing.T) {
+		got := Repeat("z", -1)
+		want := "z"
+		assert.Equal(want, got)
 	})
 
-	t.Run("Repeat a character, 0 times", func(t *testing.T) {
-		repeated := Repeat("b", 0)
-		expected := "b"
-		assertCorrectMessage(t, repeated, expected)
+	t.Run("Repeat doesn't repeat a character when pasing a zero multiplier", func(t *testing.T) {
+		got := Repeat("b", 0)
+		want := "b"
+		assert.Equal(want, got)
 	})
 
-	t.Run("Repeat a character, 1 time", func(t *testing.T) {
-		repeated := Repeat("W", 1)
-		expected := "W"
-		assertCorrectMessage(t, repeated, expected)
+	t.Run("Repeat doesn't repeat a character when pasing neutral (1) multiplier", func(t *testing.T) {
+		got := Repeat("W", 1)
+		want := "W"
+		assert.Equal(want, got)
 	})
 }
 
@@ -53,35 +50,30 @@ func ExampleRepeat() {
 
 func TestEnhancedRepeat(t *testing.T) {
 
-	assertCorrectMessage := func(t testing.TB, repeated, expected string) {
-		t.Helper()
-		if repeated != expected {
-			t.Errorf("expected %q but got %q", expected, repeated)
-		}
-	}
+	assert := require.New(t)
 
 	t.Run("EnhancedRepeat repeats a character, 10 times", func(t *testing.T) {
-		repeated := EnhancedRepeat("a", 10)
-		expected := "aaaaaaaaaa"
-		assertCorrectMessage(t, repeated, expected)
+		got := EnhancedRepeat("a", 10)
+		want := "aaaaaaaaaa"
+		assert.Equal(want, got)
 	})
 
-	t.Run("EnhancedRepeat repeats a character, pasing a negative multiplier", func(t *testing.T) {
-		repeated := EnhancedRepeat("z", -1)
-		expected := "z"
-		assertCorrectMessage(t, repeated, expected)
+	t.Run("EnhancedRepeat doesn't repeat a character when pasing a negative multiplier", func(t *testing.T) {
+		got := EnhancedRepeat("z", -1)
+		want := "z"
+		assert.Equal(want, got)
 	})
 
-	t.Run("EnhancedRepeat repeats a character, 0 times", func(t *testing.T) {
-		repeated := EnhancedRepeat("b", 0)
-		expected := "b"
-		assertCorrectMessage(t, repeated, expected)
+	t.Run("EnhancedRepeat doesn't repeat a character when pasing a zero multiplier", func(t *testing.T) {
+		got := EnhancedRepeat("b", 0)
+		want := "b"
+		assert.Equal(want, got)
 	})
 
-	t.Run("EnhancedRepeat repeats a character, 1 time", func(t *testing.T) {
-		repeated := EnhancedRepeat("W", 1)
-		expected := "W"
-		assertCorrectMessage(t, repeated, expected)
+	t.Run("EnhancedRepeat doesn't repeat a character when pasing neutral (1) multiplier", func(t *testing.T) {
+		got := EnhancedRepeat("W", 1)
+		want := "W"
+		assert.Equal(want, got)
 	})
 }
 

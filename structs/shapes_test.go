@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestPerimeter(t *testing.T) {
@@ -14,20 +15,19 @@ func TestPerimeter(t *testing.T) {
 }
 
 func TestArea(t *testing.T) {
-	checkArea := func(t testing.TB, shape Shape, want float64) {
-		t.Helper()
-		got := shape.Area()
-		assert.Equal(t, want, got, "The shape doesn't have the expected area")
-	}
 
-	t.Run("rectangles", func(t *testing.T) {
-		rectangle := Rectangle{12, 6}
-		checkArea(t, rectangle, 72.0)
+	assert := require.New(t)
+
+	t.Run("calculates a Rectangle's area", func(t *testing.T) {
+		got := Rectangle{12, 6}.Area()
+		want := 72.0
+		assert.Equal(want, got)
 	})
 
-	t.Run("circles", func(t *testing.T) {
-		circle := Circle{10}
-		checkArea(t, circle, 314.1592653589793)
+	t.Run("calculates a Circles's area", func(t *testing.T) {
+		got := Circle{10}.Area()
+		want := 314.1592653589793
+		assert.Equal(want, got)
 	})
 
 }
