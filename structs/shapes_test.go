@@ -28,7 +28,7 @@ func TestArea(t *testing.T) {
 	for _, tt := range areaTests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.shape.Area()
-			assert.Equal(t, tt.hasArea, got, "The shape doesn't have the expected area")
+			require.Equal(t, tt.hasArea, got, "The shape doesn't have the expected area")
 		})
 	}
 }
