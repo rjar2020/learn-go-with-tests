@@ -2,7 +2,7 @@ package structs
 
 import "math"
 
-//Shape assit in decoupling Area() calculation from concrete shapes
+//Shape assist in decoupling Area() calculation from concrete shapes
 type Shape interface {
 	Area() float64
 }
