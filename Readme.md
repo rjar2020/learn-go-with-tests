@@ -15,6 +15,10 @@ If you want to have a more verbose output, including coverage, test and examples
 ```bash
 go test -v -cover github.com/rjar2020/learn-go-with-tests/iteration
 ```
+If you want to run all the tests in every package at once, execute the following from the repo root:
+```bash
+gorc test
+```
 
 ## Benchmarks
 From your CI or the terminal, for executing benchmarks in a particular package use the following command:
@@ -36,3 +40,6 @@ godoc -http=:6060
 Then go to http://localhost:6060/pkg/ and search for Third Party section, your packages should be there.
 
 [Learn Go with Tests by Chris James]: https://quii.gitbook.io/learn-go-with-tests/
+
+## More to explore
+- Parallel testing, if not in the tutorial
