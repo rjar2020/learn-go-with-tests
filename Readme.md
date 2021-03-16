@@ -43,3 +43,6 @@ Then go to http://localhost:6060/pkg/ and search for Third Party section, your p
 
 ## More to explore
 - Parallel testing, if not in the tutorial
+- Implement a DB connection pool
+- Implement a web crawler 
+- Implement a scoring board algorithm
