@@ -7,6 +7,18 @@ type Shape interface {
 	Area() float64
 }
 
+//EllipseShape assist in decoupling Circumference() calculation for ellipses
+type EllipseShape interface {
+	Shape
+	Circumference() float64
+}
+
+//PolygonalShape assist in decoupling Perimeter() calculation for Polygons
+type PolygonalShape interface {
+	Shape
+	Perimeter() float64
+}
+
 //Rectangle models a rectangular shape
 type Rectangle struct {
 	Width  float64
@@ -33,6 +45,11 @@ func (c Circle) Area() float64 {
 	return math.Pi * c.Radius * c.Radius
 }
 
+//Circumference calculates a circle' perimeter
+func (c Circle) Circumference() float64 {
+	return math.Pi * c.Radius * 2
+}
+
 //Triangle models a triangular shape
 type Triangle struct {
 	Base   float64
@@ -42,4 +59,9 @@ type Triangle struct {
 //Area calculates a triangle' area
 func (t Triangle) Area() float64 {
 	return (t.Base * t.Height) * 0.5
+}
+
+//Perimeter calculates a triangle' perimeter, based on base and height, so an approximation
+func (t Triangle) Perimeter() float64 {
+	return t.Base + math.Sqrt(math.Pow(t.Base, 2)+(math.Pow(t.Height, 2)*4))
 }
