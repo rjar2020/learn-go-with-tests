@@ -18,7 +18,8 @@ func TestWallet(t *testing.T) {
 
 	t.Run("Withdraw should decrease the balance", func(t *testing.T) {
 		wallet := Wallet{balance: Bitcoin(20)}
-		wallet.Withdraw(Bitcoin(10))
+		err := wallet.Withdraw(Bitcoin(10))
+		asserts.NoError(err)
 		asserts.Equal(Bitcoin(10), wallet.Balance())
 	})
 
