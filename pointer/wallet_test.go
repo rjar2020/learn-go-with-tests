@@ -1,6 +1,7 @@
 package pointer
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -30,4 +31,71 @@ func TestWallet(t *testing.T) {
 		asserts.Error(ErrInsufficientFunds, err)
 		asserts.Equal(initialBalance, wallet.Balance())
 	})
+}
+
+func BenchmarkBalance(b *testing.B) {
+	wallet := Wallet{balance: Bitcoin(20)}
+	for i := 0; i < b.N; i++ {
+		wallet.Balance()
+	}
+}
+
+func BenchmarkDepositNewWallet(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		wallet := Wallet{balance: Bitcoin(20)}
+		wallet.Deposit(Bitcoin(10))
+	}
+}
+
+func BenchmarkDepositIncreasingFunds(b *testing.B) {
+	wallet := Wallet{balance: Bitcoin(20)}
+	for i := 0; i < b.N; i++ {
+		wallet.Deposit(Bitcoin(10))
+	}
+}
+
+func BenchmarkWithdrawNewWallet(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		wallet := Wallet{balance: Bitcoin(20)}
+		wallet.Withdraw(Bitcoin(10))
+	}
+}
+
+func BenchmarkWithdrawDecreasingFunds(b *testing.B) {
+	wallet := Wallet{balance: Bitcoin(9223372036854775807)}
+	for i := 0; i < b.N; i++ {
+		wallet.Deposit(Bitcoin(100))
+	}
+}
+
+func BenchmarkWithdrawInsufficientFunds(b *testing.B) {
+	wallet := Wallet{balance: Bitcoin(10)}
+	for i := 0; i < b.N; i++ {
+		wallet.Deposit(Bitcoin(100))
+	}
+}
+
+func ExampleWallet_Balance() {
+	wallet := Wallet{balance: Bitcoin(20)}
+	fmt.Printf("%s", wallet.Balance())
+	/* Output: 20 BTC*/
+}
+
+func ExampleWallet_Deposit() {
+	wallet := Wallet{balance: Bitcoin(20)}
+	wallet.Deposit(Bitcoin(10))
+	fmt.Printf("%s", wallet.Balance())
+	/* Output: 30 BTC*/
+}
+
+func ExampleWallet_Withdraw() {
+	wallet := Wallet{balance: Bitcoin(20)}
+	err := wallet.Withdraw(Bitcoin(10))
+	fmt.Printf("%s \"", wallet.Balance())
+	err = wallet.Withdraw(Bitcoin(100))
+	if err != nil {
+		fmt.Printf("%s\" ", err)
+	}
+	fmt.Printf("%s", wallet.Balance())
+	/* Output: 10 BTC "cannot withdraw, insufficient funds" 10 BTC*/
 }

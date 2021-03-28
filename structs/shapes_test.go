@@ -111,7 +111,6 @@ func BenchmarkCircumference(b *testing.B) {
 func ExampleTriangle_Area() {
 	triangle := Triangle{Base: 12, Height: 6}
 	fmt.Print(triangle.Area())
-	fmt.Print(" ")
 	/* Output: 36*/
 }
 
@@ -124,7 +123,6 @@ func ExampleRectangle_Area() {
 func ExampleCircle_Area() {
 	circle := Circle{Radius: 10}
 	fmt.Print(circle.Area())
-	fmt.Print(" ")
 	/* Output: 314.1592653589793*/
 }
 
@@ -137,13 +135,11 @@ func ExampleRectangle_Perimeter() {
 func ExampleTriangle_Perimeter() {
 	triangle := Triangle{Base: 12, Height: 6}
 	fmt.Print(triangle.Perimeter())
-	fmt.Print(" ")
 	/* Output: 28.97056274847714*/
 }
 
 func ExampleCircle_Circumference() {
 	circle := Circle{Radius: 10}
 	fmt.Print(circle.Circumference())
-	fmt.Print(" ")
 	/* Output: 62.83185307179586*/
 }
