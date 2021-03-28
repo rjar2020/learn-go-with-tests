@@ -57,21 +57,30 @@ func BenchmarkDepositIncreasingFunds(b *testing.B) {
 func BenchmarkWithdrawNewWallet(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		wallet := Wallet{balance: Bitcoin(20)}
-		wallet.Withdraw(Bitcoin(10))
+		err := wallet.Withdraw(Bitcoin(10))
+		if err != nil {
+			fmt.Printf("%s\" ", err)
+		}
 	}
 }
 
 func BenchmarkWithdrawDecreasingFunds(b *testing.B) {
 	wallet := Wallet{balance: Bitcoin(9223372036854775807)}
 	for i := 0; i < b.N; i++ {
-		wallet.Deposit(Bitcoin(100))
+		err := wallet.Withdraw(Bitcoin(100))
+		if err != nil {
+			fmt.Printf("%s\" ", err)
+		}
 	}
 }
 
 func BenchmarkWithdrawInsufficientFunds(b *testing.B) {
 	wallet := Wallet{balance: Bitcoin(10)}
 	for i := 0; i < b.N; i++ {
-		wallet.Deposit(Bitcoin(100))
+		err := wallet.Withdraw(Bitcoin(100))
+		if err != nil {
+			//Do nothing, as it will pollute benchmark's output
+		}
 	}
 }
 
