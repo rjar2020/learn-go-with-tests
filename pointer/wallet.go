@@ -5,6 +5,9 @@ import (
 	"fmt"
 )
 
+//ErrInsufficientFunds is thronw when a withdraw can't be done in a wallet as there aren't enough funds
+var ErrInsufficientFunds = errors.New("cannot withdraw, insufficient funds")
+
 //Bitcoin helps to make the wallet implementation more specific
 type Bitcoin int
 
@@ -27,9 +30,6 @@ func (w *Wallet) Deposit(amount Bitcoin) {
 func (w *Wallet) Balance() Bitcoin {
 	return w.balance
 }
-
-//ErrInsufficientFunds is thronw when a withdraw can't be done in a wallet as there aren't enough funds
-var ErrInsufficientFunds = errors.New("cannot withdraw, insufficient funds")
 
 //Withdraw decrease a Wallets balance when a client takes some bitcoins
 func (w *Wallet) Withdraw(amount Bitcoin) error {
