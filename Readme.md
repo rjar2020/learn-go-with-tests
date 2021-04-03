@@ -17,7 +17,7 @@ go test -v -cover github.com/rjar2020/learn-go-with-tests/iteration
 ```
 If you want to run all the tests in every package at once, execute the following from the repo root:
 ```bash
-gorc test
+go test ./...
 ```
 
 ## Benchmarks

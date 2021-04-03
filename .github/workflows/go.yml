@@ -19,10 +19,10 @@ jobs:
         go-version: 1.15
     
     - name: Setup dependencies
-      run: go get github.com/stretchr/gorc; go get -u github.com/kisielk/errcheck
+      run: go get -u github.com/kisielk/errcheck
 
     - name: Linter step - find unchecked errors
       run: errcheck ./...
 
-    - name: Test with gorc
-      run: gorc test
+    - name: Running tests
+      run: go test ./... -v -cover

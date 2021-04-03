@@ -33,55 +33,51 @@ func TestWallet(t *testing.T) {
 	})
 }
 
-func BenchmarkBalance(b *testing.B) {
+func BenchmarkWallet_Balance(b *testing.B) {
 	wallet := Wallet{balance: Bitcoin(20)}
 	for i := 0; i < b.N; i++ {
 		wallet.Balance()
 	}
 }
 
-func BenchmarkDepositNewWallet(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+func BenchmarkWallet_Deposit(b *testing.B) {
+
+	b.Run("new ballet", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			wallet := Wallet{balance: Bitcoin(20)}
+			wallet.Deposit(Bitcoin(10))
+		}
+	})
+
+	b.Run("increasing funds same wallet", func(b *testing.B) {
 		wallet := Wallet{balance: Bitcoin(20)}
-		wallet.Deposit(Bitcoin(10))
-	}
-}
-
-func BenchmarkDepositIncreasingFunds(b *testing.B) {
-	wallet := Wallet{balance: Bitcoin(20)}
-	for i := 0; i < b.N; i++ {
-		wallet.Deposit(Bitcoin(10))
-	}
-}
-
-func BenchmarkWithdrawNewWallet(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		wallet := Wallet{balance: Bitcoin(20)}
-		err := wallet.Withdraw(Bitcoin(10))
-		if err != nil {
-			fmt.Printf("%s\" ", err)
+		for i := 0; i < b.N; i++ {
+			wallet.Deposit(Bitcoin(10))
 		}
-	}
+	})
 }
 
-func BenchmarkWithdrawDecreasingFunds(b *testing.B) {
-	wallet := Wallet{balance: Bitcoin(9223372036854775807)}
-	for i := 0; i < b.N; i++ {
-		err := wallet.Withdraw(Bitcoin(100))
-		if err != nil {
-			fmt.Printf("%s\" ", err)
+func BenchmarkWallet_Withdraw(b *testing.B) {
+	b.Run("new ballet", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			wallet := Wallet{balance: Bitcoin(20)}
+			_ = wallet.Withdraw(Bitcoin(10))
 		}
-	}
-}
+	})
 
-func BenchmarkWithdrawInsufficientFunds(b *testing.B) {
-	wallet := Wallet{balance: Bitcoin(10)}
-	for i := 0; i < b.N; i++ {
-		err := wallet.Withdraw(Bitcoin(100))
-		if err != nil {
-			//Do nothing, as it will pollute benchmark's output
+	b.Run("decreasing funds same wallet", func(b *testing.B) {
+		wallet := Wallet{balance: Bitcoin(9223372036854775807)}
+		for i := 0; i < b.N; i++ {
+			_ = wallet.Withdraw(Bitcoin(100))
 		}
-	}
+	})
+
+	b.Run("insufficient funds", func(b *testing.B) {
+		wallet := Wallet{balance: Bitcoin(10)}
+		for i := 0; i < b.N; i++ {
+			_ = wallet.Withdraw(Bitcoin(100))
+		}
+	})
 }
 
 func ExampleWallet_Balance() {
