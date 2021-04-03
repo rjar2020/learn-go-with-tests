@@ -42,7 +42,9 @@ Then go to http://localhost:6060/pkg/ and search for Third Party section, your p
 [Learn Go with Tests by Chris James]: https://quii.gitbook.io/learn-go-with-tests/
 
 ## More to explore
+- Include a linter for ensuring exported methods are documented (like is reported by VS Code but in the CI, if it exists)
 - Parallel testing, if not in the tutorial
 - Implement a DB connection pool
 - Implement a web crawler 
 - Implement a scoring board algorithm
+- Generate sample data in slices/maps for benchmarks (see #Dictionary.Add benchmark)
