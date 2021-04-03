@@ -3,9 +3,9 @@ package maps
 const (
 	//ErrNotFound is thrown when trying to search a nonexistent word
 	ErrNotFound = DictionaryErr("could not find the word you were looking for")
-	//ErrNotFound is thrown when trying to add an existing word
+	//ErrWordExists is thrown when trying to add an existing word
 	ErrWordExists = DictionaryErr("cannot add word because it already exists")
-	//ErrNotFound is thrown when trying to update a nonexistent word
+	//ErrWordDoesNotExist is thrown when trying to update a nonexistent word
 	ErrWordDoesNotExist = DictionaryErr("cannot update word because it does not exist")
 )
 
