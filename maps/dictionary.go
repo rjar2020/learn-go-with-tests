@@ -63,7 +63,7 @@ func (d Dictionary) Update(word, definition string) error {
 	return nil
 }
 
-//Update enables a client to delete a word's definition
+//Delete enables a client to delete a word's definition
 func (d Dictionary) Delete(word string) {
 	delete(d, word)
 }
