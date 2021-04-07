@@ -31,7 +31,7 @@ func (d Dictionary) Search(word string) (string, error) {
 	return definition, nil
 }
 
-//Search enables a client to add a new word's definition
+//Add enables a client to add a new word's definition
 func (d Dictionary) Add(word, definition string) error {
 	_, err := d.Search(word)
 
