@@ -48,3 +48,4 @@ Then go to http://localhost:6060/pkg/ and search for Third Party section, your p
 - Implement a web crawler 
 - Implement a scoring board algorithm
 - Generate sample data in slices/maps for benchmarks (see #Dictionary.Add benchmark)
+- Refactor (or create v2) mocking package to use Testify mocks
