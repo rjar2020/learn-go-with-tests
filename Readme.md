@@ -19,6 +19,10 @@ If you want to run all the tests in every package at once, execute the following
 ```bash
 go test ./...
 ```
+To get some help finding out race conditions in your implementation, you could use the [Go Race detector] as follows:
+```bash
+go test ./... -race
+```
 
 ## Benchmarks
 From your CI or the terminal, for executing benchmarks in a particular package use the following command:
@@ -26,8 +30,6 @@ From your CI or the terminal, for executing benchmarks in a particular package u
 ```bash
 go test -bench=. github.com/rjar2020/learn-go-with-tests/iteration
 ```
-
-[Learn Go with Tests by Chris James]: https://quii.gitbook.io/learn-go-with-tests/
 
 ## Docs
 From your terminal, to see the documentation execute the following steps from the project's root:
@@ -39,8 +41,6 @@ godoc -http=:6060
 ```
 Then go to http://localhost:6060/pkg/ and search for Third Party section, your packages should be there.
 
-[Learn Go with Tests by Chris James]: https://quii.gitbook.io/learn-go-with-tests/
-
 ## More to explore
 - Include a linter for ensuring exported methods are documented (like is reported by VS Code but in the CI, if it exists)
 - Parallel testing, if not in the tutorial
@@ -49,3 +49,6 @@ Then go to http://localhost:6060/pkg/ and search for Third Party section, your p
 - Implement a scoring board algorithm
 - Generate sample data in slices/maps for benchmarks (see #Dictionary.Add benchmark)
 - Refactor (or create v2) mocking package to use Testify mocks
+
+[Learn Go with Tests by Chris James]: https://quii.gitbook.io/learn-go-with-tests/
+[Go Race detector]: https://blog.golang.org/race-detector

@@ -1,6 +1,7 @@
 package concurrency
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -47,4 +48,21 @@ func BenchmarkCheckWebsite(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		CheckWebsites(slowStubWebsiteChecker, urls)
 	}
+}
+
+func ExampleCheckWebsites() {
+	websites := []string{
+		"http://google.com",
+		"http://blog.gypsydave5.com",
+		"watt://furhurterwe.geds",
+	}
+	got := CheckWebsites(mockWebsiteCheker, websites)
+
+	for _, url := range websites {
+		fmt.Printf("%s -> %t\n", url, got[url])
+	}
+	/* Output:
+http://google.com -> true
+http://blog.gypsydave5.com -> true
+watt://furhurterwe.geds -> false*/
 }
