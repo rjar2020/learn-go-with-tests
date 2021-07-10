@@ -1,6 +1,8 @@
 package racer
 
 import (
+	"fmt"
+	"net"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -46,4 +48,36 @@ func makeDelayedServer(delay time.Duration) *httptest.Server {
 		time.Sleep(delay)
 		w.WriteHeader(http.StatusOK)
 	}))
+}
+
+func ExampleConfigurableRacer() {
+	serverA := makeDelayedUnstartedServer(0 * time.Microsecond)
+	serverB := makeDelayedUnstartedServer(5 * time.Millisecond)
+	
+	overrideListenerAndStartServer(serverA, "127.0.0.1:8585")
+	overrideListenerAndStartServer(serverB, "127.0.0.1:8586")
+	
+	defer serverA.Close()
+	defer serverB.Close()
+
+	response, _ := ConfigurableRacer(serverA.URL, serverB.URL, 20*time.Millisecond)
+	fmt.Printf("%s", response)
+
+	_, err := ConfigurableRacer(serverB.URL, serverB.URL, 1*time.Millisecond)
+	fmt.Printf(" - %s", err)
+	/* Output: http://127.0.0.1:8585 - timed out waiting for http://127.0.0.1:8586 and http://127.0.0.1:8586*/
+}
+
+func makeDelayedUnstartedServer(delay time.Duration) *httptest.Server {
+	return httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(delay)
+		w.WriteHeader(http.StatusOK)
+	}))
+}
+
+func overrideListenerAndStartServer(server *httptest.Server, url string)  {
+	l, _ := net.Listen("tcp", url)
+	server.Listener.Close()
+	server.Listener = l
+	server.Start()
 }
