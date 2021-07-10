@@ -77,7 +77,7 @@ func makeDelayedUnstartedServer(delay time.Duration) *httptest.Server {
 
 func overrideListenerAndStartServer(server *httptest.Server, url string)  {
 	l, _ := net.Listen("tcp", url)
-	server.Listener.Close()
+	_ = server.Listener.Close()
 	server.Listener = l
 	server.Start()
 }
