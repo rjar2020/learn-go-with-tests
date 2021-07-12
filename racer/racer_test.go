@@ -50,22 +50,13 @@ func makeDelayedServer(delay time.Duration) *httptest.Server {
 	}))
 }
 
-func BenchmarkConfigurableRacer(b *testing.B)  {
-	server := makeDelayedServer(2 * time.Millisecond)
-	defer server.Close()
-
-	for i := 0; i < b.N; i++ {
-		_,_ = ConfigurableRacer(server.URL, server.URL, 20*time.Millisecond)
-	}
-}
-
 func ExampleConfigurableRacer() {
 	serverA := makeDelayedUnstartedServer(0 * time.Microsecond)
 	serverB := makeDelayedUnstartedServer(5 * time.Millisecond)
-	
+
 	overrideListenerAndStartServer(serverA, "127.0.0.1:8585")
 	overrideListenerAndStartServer(serverB, "127.0.0.1:8586")
-	
+
 	defer serverA.Close()
 	defer serverB.Close()
 
@@ -84,9 +75,18 @@ func makeDelayedUnstartedServer(delay time.Duration) *httptest.Server {
 	}))
 }
 
-func overrideListenerAndStartServer(server *httptest.Server, url string)  {
+func overrideListenerAndStartServer(server *httptest.Server, url string) {
 	l, _ := net.Listen("tcp", url)
 	_ = server.Listener.Close()
 	server.Listener = l
 	server.Start()
+}
+
+func BenchmarkConfigurableRacer(b *testing.B) {
+	server := makeDelayedServer(2 * time.Millisecond)
+	defer server.Close()
+
+	for i := 0; i < b.N; i++ {
+		_, _ = ConfigurableRacer(server.URL, server.URL, 20*time.Millisecond)
+	}
 }
