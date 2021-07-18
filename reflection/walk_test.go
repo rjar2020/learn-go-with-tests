@@ -1,6 +1,7 @@
 package reflection
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -134,4 +135,32 @@ func TestWalk(t *testing.T) {
 
 		assert.Equal(want, got)
 	})
+}
+
+func ExampleWalk() {
+	example := Person{
+		"Chris",
+		Profile{33, "London"},
+	}
+
+	var got []string
+
+	Walk(example, func(input string) {
+		got = append(got, input)
+	})
+
+	fmt.Printf("%s", got)
+
+	/* Output: [Chris London]*/
+}
+
+func BenchmarkWalk(b *testing.B) {
+	example := Person{
+		"Chris",
+		Profile{33, "London"},
+	}
+
+	for i := 0; i < b.N; i++ {
+		Walk(example, func(input string) {})
+	}
 }
