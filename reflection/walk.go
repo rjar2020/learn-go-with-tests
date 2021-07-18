@@ -2,6 +2,7 @@ package reflection
 
 import "reflect"
 
+//Walk uses recursion to traverse arbitrary data structure x, applying fn function
 func Walk(x interface{}, fn func(input string)) {
 	val := getValue(x)
 
