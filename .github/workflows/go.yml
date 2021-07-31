@@ -20,6 +20,9 @@ jobs:
     
     - name: Setup dependencies
       run: go get -u github.com/kisielk/errcheck
+    
+    - name: Reports suspicious constructs based on higher level heuristics than the ones used at compile time
+      run: go vet ./...
 
     - name: Linter step - find unchecked errors
       run: errcheck ./...
