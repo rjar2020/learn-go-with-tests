@@ -82,10 +82,7 @@ func TestPropertiesOfConversion(t *testing.T) {
 		return fromRoman == arabic
 	}
 
-	err := quick.Check(assertion, &quick.Config{
-		MaxCount: 10000,
-	})
-	require.NoError(t, err, err)
+	assertPropertyBasedTest(t, assertion)
 }
 
 func TestPropertiesOfConversionWhenError(t *testing.T) {
@@ -97,10 +94,7 @@ func TestPropertiesOfConversionWhenError(t *testing.T) {
 		return err == ErrOutOfRomanNumeralRange
 	}
 
-	err := quick.Check(assertion, &quick.Config{
-		MaxCount: 10000,
-	})
-	require.NoError(t, err, err)
+	assertPropertyBasedTest(t, assertion)
 }
 
 func TestPropertiesOfNumeralRepetition(t *testing.T) {
@@ -113,6 +107,10 @@ func TestPropertiesOfNumeralRepetition(t *testing.T) {
 		return !romanNumeralIlegalRepetitionRegex.MatchString(roman)
 	}
 
+	assertPropertyBasedTest(t, assertion)
+}
+
+func assertPropertyBasedTest(t *testing.T, assertion interface{}) {
 	err := quick.Check(assertion, &quick.Config{
 		MaxCount: 10000,
 	})
