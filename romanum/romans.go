@@ -35,7 +35,7 @@ var allRomanNumerals = romanNumerals{
 	{1, "I"},
 }
 
-func (r romanNumerals) ValueOf(symbols ...byte) uint16 {
+func (r romanNumerals) valueOf(symbols ...byte) uint16 {
 	symbol := string(symbols)
 	for _, s := range r {
 		if s.Symbol == symbol {
@@ -70,6 +70,7 @@ func (w windowedRoman) symbols() (symbols [][]byte) {
 	return
 }
 
+//ConvertToRoman transform an arabic/decimal number to a roman numeral string
 func ConvertToRoman(arabic uint16) (string, error) {
 
 	if arabic > maxRomanNumeral {
@@ -89,9 +90,10 @@ func ConvertToRoman(arabic uint16) (string, error) {
 	return result.String(), nil
 }
 
+//ConvertToArabic transform a roman numeral string to a decimal/arabic number
 func ConvertToArabic(roman string) (total uint16) {
 	for _, symbols := range windowedRoman(roman).symbols() {
-		total += allRomanNumerals.ValueOf(symbols...)
+		total += allRomanNumerals.valueOf(symbols...)
 	}
 	return
 }
