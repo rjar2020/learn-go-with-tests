@@ -1,15 +1,23 @@
 package romanum
 
-import "strings"
+import (
+	"errors"
+	"strings"
+)
 
 type romanNumeral struct {
-	Value  int
+	Value  uint16
 	Symbol string
 }
 
 type romanNumerals []romanNumeral
 
 type windowedRoman string
+
+//ErrOutOfRomanNumeralRange is thronw when try to convert to roman an arabic greater than 3999
+var ErrOutOfRomanNumeralRange = errors.New("roman numerals cannot go above 3999")
+
+const maxRomanNumeral = 3999
 
 var allRomanNumerals = romanNumerals{
 	{1000, "M"},
@@ -27,7 +35,7 @@ var allRomanNumerals = romanNumerals{
 	{1, "I"},
 }
 
-func (r romanNumerals) ValueOf(symbols ...byte) int {
+func (r romanNumerals) ValueOf(symbols ...byte) uint16 {
 	symbol := string(symbols)
 	for _, s := range r {
 		if s.Symbol == symbol {
@@ -62,7 +70,11 @@ func (w windowedRoman) symbols() (symbols [][]byte) {
 	return
 }
 
-func ConvertToRoman(arabic int) string {
+func ConvertToRoman(arabic uint16) (string, error) {
+
+	if arabic > maxRomanNumeral {
+		return "", ErrOutOfRomanNumeralRange
+	}
 
 	var result strings.Builder
 
@@ -74,10 +86,10 @@ func ConvertToRoman(arabic int) string {
 
 	}
 
-	return result.String()
+	return result.String(), nil
 }
 
-func ConvertToArabic(roman string) (total int) {
+func ConvertToArabic(roman string) (total uint16) {
 	for _, symbols := range windowedRoman(roman).symbols() {
 		total += allRomanNumerals.ValueOf(symbols...)
 	}

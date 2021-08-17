@@ -2,14 +2,16 @@ package romanum
 
 import (
 	"fmt"
+	"regexp"
 	"testing"
+	"testing/quick"
 
 	"github.com/stretchr/testify/require"
 )
 
 var (
 	cases = []struct {
-		Arabic int
+		Arabic uint16
 		Roman  string
 	}{
 		{1, "I"},
@@ -55,7 +57,7 @@ var (
 func TestRomanNumerals(t *testing.T) {
 	for _, test := range cases {
 		t.Run(fmt.Sprintf("%d gets converted to %q", test.Arabic, test.Roman), func(t *testing.T) {
-			got := ConvertToRoman(test.Arabic)
+			got, _ := ConvertToRoman(test.Arabic)
 			require.Equal(t, test.Roman, got)
 		})
 	}
@@ -68,4 +70,51 @@ func TestConvertingToArabic(t *testing.T) {
 			require.Equal(t, test.Arabic, got)
 		})
 	}
+}
+
+func TestPropertiesOfConversion(t *testing.T) {
+	assertion := func(arabic uint16) bool {
+		if arabic > 3999 {
+			return true
+		}
+		roman, _ := ConvertToRoman(arabic)
+		fromRoman := ConvertToArabic(roman)
+		return fromRoman == arabic
+	}
+
+	err := quick.Check(assertion, &quick.Config{
+		MaxCount: 10000,
+	})
+	require.NoError(t, err, err)
+}
+
+func TestPropertiesOfConversionWhenError(t *testing.T) {
+	assertion := func(arabic uint16) bool {
+		if arabic < 4000 {
+			return true
+		}
+		_, err := ConvertToRoman(arabic)
+		return err == ErrOutOfRomanNumeralRange
+	}
+
+	err := quick.Check(assertion, &quick.Config{
+		MaxCount: 10000,
+	})
+	require.NoError(t, err, err)
+}
+
+func TestPropertiesOfNumeralRepetition(t *testing.T) {
+	romanNumeralIlegalRepetitionRegex, _ := regexp.Compile("IIII|XXXX|VVVV|DDDD|CCCC|MMMM|LLLL")
+	assertion := func(arabic uint16) bool {
+		if arabic > 3999 {
+			return true
+		}
+		roman, _ := ConvertToRoman(arabic)
+		return !romanNumeralIlegalRepetitionRegex.MatchString(roman)
+	}
+
+	err := quick.Check(assertion, &quick.Config{
+		MaxCount: 10000,
+	})
+	require.NoError(t, err, err)
 }
