@@ -39,7 +39,7 @@ func TestSecondHandVector(t *testing.T) {
 	for _, c := range cases {
 		t.Run(testName((c.time)), func(t *testing.T) {
 			got := secondHandPoint(c.time)
-			assertFloatEqual(c.point, got, *t)
+			assertFloatEqual(c.point, got, t)
 		})
 	}
 }
@@ -52,6 +52,6 @@ func simpleTime(hours, minutes, seconds int) time.Time {
 	return time.Date(312, time.October, 28, hours, minutes, seconds, 0, time.UTC)
 }
 
-func assertFloatEqual(expected, got Point, t testing.T) {
-	require.InDelta(&testing.T{}, expected.X, got.X, 1e-7)
+func assertFloatEqual(expected, got Point, t *testing.T) {
+	require.InDelta(t, expected.X, got.X, 1e-7)
 }
