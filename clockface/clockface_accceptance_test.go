@@ -1,6 +1,8 @@
 package clockface_test
 
 import (
+	"bytes"
+	"encoding/xml"
 	"testing"
 	"time"
 
@@ -8,26 +10,104 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestSecondHandAtMidnight(t *testing.T) {
+type SVG struct {
+	XMLName xml.Name `xml:"svg"`
+	Xmlns   string   `xml:"xmlns,attr"`
+	Width   string   `xml:"width,attr"`
+	Height  string   `xml:"height,attr"`
+	ViewBox string   `xml:"viewBox,attr"`
+	Version string   `xml:"version,attr"`
+	Circle  Circle   `xml:"circle"`
+	Line    []Line   `xml:"line"`
+}
 
-	assert := require.New(t)
+type Circle struct {
+	Cx float64 `xml:"cx,attr"`
+	Cy float64 `xml:"cy,attr"`
+	R  float64 `xml:"r,attr"`
+}
 
-	t.Run("second hand at midnight", func(t *testing.T) {
-		tm := time.Date(1337, time.January, 1, 0, 0, 0, 0, time.UTC)
+type Line struct {
+	X1 float64 `xml:"x1,attr"`
+	Y1 float64 `xml:"y1,attr"`
+	X2 float64 `xml:"x2,attr"`
+	Y2 float64 `xml:"y2,attr"`
+}
 
-		want := clockface.Point{X: 150, Y: 150 - 90}
-		got := clockface.SecondHand(tm)
+func TestSVGWriterSecondHand(t *testing.T) {
+	cases := []struct {
+		time time.Time
+		line Line
+	}{
+		{
+			simpleTime(0, 0, 0),
+			Line{150, 150, 150, 60},
+		},
+		{
+			simpleTime(0, 0, 30),
+			Line{150, 150, 150, 240},
+		},
+	}
 
-		assert.Equal(want, got)
-	})
+	for _, c := range cases {
+		t.Run(testName(c.time), func(t *testing.T) {
+			b := bytes.Buffer{}
+			clockface.SVGWriter(&b, c.time)
+			svg := SVG{}
+			xml.Unmarshal(b.Bytes(), &svg)
+			require.Contains(t, svg.Line, c.line, "Expected to find the second hand line %+v, in the SVG lines %+v", c.line, svg.Line)
+		})
+	}
+}
 
-	t.Run("second hand at 30 seconds", func(t *testing.T) {
-		tm := time.Date(1337, time.January, 1, 0, 0, 30, 0, time.UTC)
+func TestSVGWriterMinuteHand(t *testing.T) {
+	cases := []struct {
+		time time.Time
+		line Line
+	}{
+		{
+			simpleTime(0, 0, 0),
+			Line{150, 150, 150, 70},
+		},
+	}
 
-		want := clockface.Point{X: 150, Y: 150 + 90}
-		got := clockface.SecondHand(tm)
+	for _, c := range cases {
+		t.Run(testName(c.time), func(t *testing.T) {
+			b := bytes.Buffer{}
+			clockface.SVGWriter(&b, c.time)
+			svg := SVG{}
+			xml.Unmarshal(b.Bytes(), &svg)
+			require.Contains(t, svg.Line, c.line, "Expected to find the minute hand line %+v, in the SVG lines %+v", c.line, svg.Line)
+		})
+	}
+}
 
-		assert.Equal(want, got)
-	})
+func TestSVGWriterHourHand(t *testing.T) {
+	cases := []struct {
+		time time.Time
+		line Line
+	}{
+		{
+			simpleTime(6, 0, 0),
+			Line{150, 150, 150, 200},
+		},
+	}
 
+	for _, c := range cases {
+		t.Run(testName(c.time), func(t *testing.T) {
+			b := bytes.Buffer{}
+			clockface.SVGWriter(&b, c.time)
+			svg := SVG{}
+			xml.Unmarshal(b.Bytes(), &svg)
+			require.Contains(t, svg.Line, c.line, "Expected to find the hour hand line %+v, in the SVG lines %+v", c.line, svg.Line)
+		})
+	}
+}
+
+func testName(t time.Time) string {
+	return t.Format("15:04:05")
+}
+
+func simpleTime(hours, minutes, seconds int) time.Time {
+	return time.Date(312, time.October, 28, hours, minutes, seconds, 0, time.UTC)
 }
