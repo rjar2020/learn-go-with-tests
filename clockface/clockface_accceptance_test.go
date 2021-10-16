@@ -54,7 +54,7 @@ func TestSVGWriterSecondHand(t *testing.T) {
 			b := bytes.Buffer{}
 			clockface.SVGWriter(&b, c.time)
 			svg := SVG{}
-			xml.Unmarshal(b.Bytes(), &svg)
+			_ = xml.Unmarshal(b.Bytes(), &svg)
 			require.Contains(t, svg.Line, c.line, "Expected to find the second hand line %+v, in the SVG lines %+v", c.line, svg.Line)
 		})
 	}
@@ -76,7 +76,7 @@ func TestSVGWriterMinuteHand(t *testing.T) {
 			b := bytes.Buffer{}
 			clockface.SVGWriter(&b, c.time)
 			svg := SVG{}
-			xml.Unmarshal(b.Bytes(), &svg)
+			_ = xml.Unmarshal(b.Bytes(), &svg)
 			require.Contains(t, svg.Line, c.line, "Expected to find the minute hand line %+v, in the SVG lines %+v", c.line, svg.Line)
 		})
 	}
@@ -98,7 +98,7 @@ func TestSVGWriterHourHand(t *testing.T) {
 			b := bytes.Buffer{}
 			clockface.SVGWriter(&b, c.time)
 			svg := SVG{}
-			xml.Unmarshal(b.Bytes(), &svg)
+			_ = xml.Unmarshal(b.Bytes(), &svg)
 			require.Contains(t, svg.Line, c.line, "Expected to find the hour hand line %+v, in the SVG lines %+v", c.line, svg.Line)
 		})
 	}
